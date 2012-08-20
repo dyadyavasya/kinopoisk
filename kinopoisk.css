@@ -1,0 +1,34 @@
+.kinopoisk {
+    display: inline-block;
+    background-color: #F5F5F5;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 4px 4px 4px 4px;
+    margin-bottom: 20px;
+    min-height: 20px;
+    padding: 19px;
+    color: #333333;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+}
+.kinopoisk a {
+    color: #0088CC;
+    text-decoration: none;
+}
+.kinopoisk a:hover {
+    color: #005580;
+    text-decoration: underline;
+}
+.kinopoisk .stars {
+    font-family: Arial,sans-serif;
+    font-size: 18px;
+    color: #FAA732;
+}
+.kinopoisk .description {
+    display: inline-block;
+    width: 130px;
+}
+.kinopoisk .rating {
+    display: inline-block;
+    width: 30px;
+}
