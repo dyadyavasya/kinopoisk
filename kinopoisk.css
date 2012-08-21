@@ -1,4 +1,4 @@
-.kinopoisk {
+.kp_container {
     display: inline-block;
     background-color: #F5F5F5;
     border: 1px solid rgba(0, 0, 0, 0.05);
@@ -11,24 +11,24 @@
     font-size: 13px;
     line-height: 18px;
 }
-.kinopoisk a {
+.kp_container a {
     color: #0088CC;
     text-decoration: none;
 }
-.kinopoisk a:hover {
+.kp_container a:hover {
     color: #005580;
     text-decoration: underline;
 }
-.kinopoisk .stars {
+.kp_container .kp_stars {
     font-family: Arial,sans-serif;
     font-size: 18px;
     color: #FAA732;
 }
-.kinopoisk .description {
+.kp_container .kp_description {
     display: inline-block;
     width: 130px;
 }
-.kinopoisk .rating {
+.kp_container .kp_rating {
     display: inline-block;
     width: 30px;
 }

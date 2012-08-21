@@ -11,13 +11,13 @@
                 "range"  : 10,
                 "order"  : ["kinopoisk", "imdb"],
                 "kinopoisk_template": '<div>' +
-                        '<span class="description">Рейтинг <a href="http://kinopoisk.ru" target="new">Кинопоиска</a>:</span>' +
-                        '<span class="rating" title="Проголосовало $vote">$rating</span>' +
-                        '<span class="stars">$stars</span></div>',
+                        '<span class="kp_description">Рейтинг <a href="http://kinopoisk.ru" target="new">Кинопоиска</a>:</span>' +
+                        '<span class="kp_rating" title="Проголосовало $vote">$rating</span>' +
+                        '<span class="kp_stars">$stars</span></div>',
                 "imdb_template": '<div>' +
-                        '<span class="description">Рейтинг <a href="http://imdb.com" target="new">IMDB</a>:</span>' +
-                        '<span class="rating" title="Проголосовало $vote">$rating</span>' +
-                        '<span class="stars">$stars</span></div>'
+                        '<span class="kp_description">Рейтинг <a href="http://imdb.com" target="new">IMDB</a>:</span>' +
+                        '<span class="kp_rating" title="Проголосовало $vote">$rating</span>' +
+                        '<span class="kp_stars">$stars</span></div>'
             };
 
             return this.each(function() {
@@ -33,7 +33,6 @@
                         settings[i] = el.data(i);
                     }
                 }
-                console.log(settings);
                 el.kinopoisk('getRating', settings);
             });
         },
@@ -77,7 +76,7 @@
             var $imdb_rating = $xml.find("imdb_rating");
             // Если был указан левый movie_id
             if ($kp_rating.text() == 0 && $kp_rating.attr("num_vote") == 0) {
-                return el.html('Нет данных');
+                return el.html('<span class="kp_container">Нет данных</span>');
             }
             $kp_rating.stars   = el.kinopoisk("_getStar", $kp_rating.text(), settings);
             $imdb_rating.stars = el.kinopoisk("_getStar", $imdb_rating.text(), settings);
@@ -89,7 +88,7 @@
             for (var i in settings.order) {
                 text += ratings[settings.order[i]];
             }
-            return el.html(text);
+            return el.hide().html('<span class="kp_container">' + text + '</span>').fadeIn();
         },
         _getTemplate: function(template, $rating, settings) {
             return template
