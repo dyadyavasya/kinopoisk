@@ -32,12 +32,42 @@ If you want only one rating:
 &lt;div class="kinopoisk" data-movie="89515" data-order='["imdb"]'&gt;&lt;/div&gt;
 </code>
 </pre>
-
 Set stars' range (10 as default):
 <pre>
 <code>
 &lt;div class="kinopoisk" data-movie="89515" data-range=5 &gt;&lt;/div&gt;
 </code>
 </pre>
+<h1>API</h1>
+    You can use API to control plugin.
+    <pre><code>
+        &lt;div id="my-rating"&gt;&lt;/div&gt;
+        &lt;script&gt;
+            $("#my-rating").kinopoisk(
+                {
+                    "movie": 326,
+                    "range": 5,
+                    "order": ["imdb", "kinopoisk"]
+                }
+            );
+        &lt;/script&gt;</code>
+    </pre>
+
+You can change informer template.
+    <pre><code>
+        &lt;div id="my-rating2"&gt;&lt;/div&gt;
+        &lt;script&gt;
+            $("#my-rating2").kinopoisk(
+                {
+                    "movie": 327,
+                    "order": ["kinopoisk"],
+                    "kinopoisk_template": '&lt;div&gt;' +
+                        'Рейтинг: &lt;span class="kp_stars"&gt;$stars&lt;/span&gt;' +
+                        '&lt;span class="kp_rating"&gt;$rating&lt;/span&gt;' +
+                        '&lt;span&gt;&lt;small&gt;(Голосов: $vote)&lt;/small&gt;&lt;/span&gt;' +
+                        '&lt;/div&gt;',
+                }
+            );
+        &lt;/script&gt;</code></pre>
 <h1>License</h1>
 This plugin is dual licensed under the MIT and GPL licenses, just like jQuery itself.
