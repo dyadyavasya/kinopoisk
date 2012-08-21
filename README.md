@@ -39,7 +39,7 @@ Set stars' range (10 as default):
 </code>
 </pre>
 <h1>API</h1>
-    You can use API to control plugin.
+You can use API to control plugin.
     <pre><code>
         &lt;div id="my-rating"&gt;&lt;/div&gt;
         &lt;script&gt;
