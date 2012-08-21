@@ -1,0 +1,43 @@
+<h1>About</h1>
+<p>
+jQuery Kinopolis is a plugin that let you easily add to your web page movie rating informer. This informer shows
+movie rating from kinopois.ru and imdb.com. It does not use any server side scripts. It use javascript and css files only.
+</p>
+<h2>Getting Started</h2>
+Include jQuery and the plugin on a page.
+<pre>
+<code>
+&lt;script src="http://yandex.st/jquery/1.7.2/jquery.min.js"&gt;&lt;/script&gt;
+&lt;link rel="stylesheet" type="text/css" href="kinopoisk.min.css" /&gt;
+&lt;script type="text/javascript" src="kinopoisk.min.js">&lt;/script&gt;
+</code>
+</pre>
+Use the plugin as follows (89515 - movie id from kinopoisk.ru):
+<pre>
+<code>
+&lt;div class="kinopoisk" data-movie="89515"&gt;&lt;/div&gt;
+</code>
+</pre>
+That's all!
+<h1>Customization</h1>
+Set movie rating order (["kinopoisk", "imdb"] as default):
+<pre>
+<code>
+&lt;div class="kinopoisk" data-movie="89515" data-order='["imdb", "kinopoisk"]'&gt;&lt;/div&gt;
+</code>
+</pre>
+If you want only one rating:
+<pre>
+<code>
+&lt;div class="kinopoisk" data-movie="89515" data-order='["imdb"]'&gt;&lt;/div&gt;
+</code>
+</pre>
+
+Set stars' range (10 as default):
+<pre>
+<code>
+&lt;div class="kinopoisk" data-movie="89515" data-range=5 &gt;&lt;/div&gt;
+</code>
+</pre>
+<h1>License</h1>
+This plugin is dual licensed under the MIT and GPL licenses, just like jQuery itself.

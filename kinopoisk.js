@@ -1,3 +1,17 @@
+/**
+ * jQuery Kinopolis Plugin 0.1
+ *
+ * Kinopolis is a jQuery plugin that let you easily add to your web page movie rating informer. This informer shows
+ * movie rating from kinopois.ru and imdb.com. It does not use any server side scripts. It use javascript and css files only.
+ *
+ * @name kinopolis
+ * @version 0.1
+ * @requires jQuery v1.5.0+
+ * @author Dmitry Shamin <dmitry.shamin@gmail.com>
+ * @license Dual licensed under the MIT or GPL Version 2 licenses.
+ *
+ * Copyright 2012, Dmitry Shamin
+ */
 ;(function( $ ) {
 
     var methods = {
@@ -130,4 +144,3 @@
 $(document).ready(function() {
     $(".kinopoisk").kinopoisk();
 });
-
