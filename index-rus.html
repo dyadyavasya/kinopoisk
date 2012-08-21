@@ -50,54 +50,55 @@
         </style>
     </head>
     <body>
-    <h1>About</h1>
+    <h1>О плагине</h1>
     <p>
-    jQuery Kinopolis is a plugin that let you easily add to your web page movie rating informer. This informer shows
-    movie rating from kinopois.ru and imdb.com. It does not use any server side scripts. It use javascript and css files only.
+    Kinopoisk - это jQuery плагин, который с лёгкостью позволяет добавить на вашу страницу информер о рейтинге фильма.
+    Этот информер показывает рейтинг с сайтов kinopoisk.ru и imdb.com. Вам не надо устанавливать на свой сайт никаких
+    серверных скриптов, только файлы плагина с javascript и css.
     </p>
-    <h2>Getting Started</h2>
-    Include jQuery and the plugin on a page.
+    <h2>Начало</h2>
+    Подключить jQuery и плагин:
     <pre>
     <code>
     &lt;script src="http://yandex.st/jquery/1.7.2/jquery.min.js"&gt;&lt;/script&gt;
     &lt;link rel="stylesheet" type="text/css" href="kinopoisk.min.css" /&gt;
     &lt;script type="text/javascript" src="kinopoisk.min.js">&lt;/script&gt;</code>
     </pre>
-    Use the plugin as follows (89515 - movie id from kinopoisk.ru):
+    Использовать плагин следующим образом: (89515 - идентификатор фильма на kinopoisk.ru):
     <pre>
     <code>
     &lt;div class="kinopoisk" data-movie="89515"&gt;&lt;/div&gt;</code>
     </pre>
-    Result:
+    Результат:
     <div class="kinopoisk" data-movie="89515"></div>
-    That's all!
-    <h1>Customization</h1>
-    <h2>Rating order</h2>
-    Set movie rating order (["kinopoisk", "imdb"] as default):
+    Вот и всё!
+    <h1>Настройки</h1>
+    <h2>Порядок рейтингов</h2>
+    Установка порядка показа рейтингов (["kinopoisk", "imdb"] по умолчанию):
     <pre>
     <code>
     &lt;div class="kinopoisk" data-movie="89515" data-order='["imdb", "kinopoisk"]'&gt;&lt;/div&gt;</code>
     </pre>
-    Result:
+    Результат:
     <div class="kinopoisk" data-movie="89516" data-order='["imdb", "kinopoisk"]'></div>
-    If you want only one rating:
+    Если нужен только один рейтинг:
     <pre>
     <code>
     &lt;div class="kinopoisk" data-movie="89515" data-order='["imdb"]'&gt;&lt;/div&gt;
     </code>
     </pre>
-    Result:
+    Результат:
     <div class="kinopoisk" data-movie="89516" data-order='["imdb"]'></div>
-    <h2>Rating stars' range</h2>
-    Set stars' range (10 as default):
+    <h2>Диапазон звёзд</h2>
+    Можно установить нужный вам диапазон звёзд (10 по умолчанию):
     <pre>
     <code>
     &lt;div class="kinopoisk" data-movie="89515" data-range=5 &gt;&lt;/div&gt;</code>
     </pre>
-    Result:
+    Результат:
     <div class="kinopoisk" data-movie="89513" data-range=5></div>
     <h1>API</h1>
-    You can use API to control plugin.
+    Вы можете использовать API для контроля работы плагина.
     <pre><code>
         &lt;div id="my-rating"&gt;&lt;/div&gt;
         &lt;script&gt;
@@ -110,7 +111,7 @@
             );
         &lt;/script&gt;</code>
     </pre>
-    Result:
+    Результат:
     <div id="my-rating"></div>
     <script>
         $("#my-rating").kinopoisk(
@@ -121,7 +122,7 @@
             }
         );
     </script>
-    You can change informer template.
+    Можно изменять шаблоны информера отдельно для каждого типа рейтинга.
     <pre><code>    
         &lt;div id="my-rating2"&gt;&lt;/div&gt;
         &lt;script&gt;
@@ -137,7 +138,7 @@
                 }
             );
         &lt;/script&gt;</code></pre>
-    Result:
+    Результат:
     <div id="my-rating2"></div>
     <script>
         $("#my-rating2").kinopoisk(
@@ -153,8 +154,8 @@
         );
     </script>
 
-    <h1>License</h1>
-    This plugin is dual licensed under the MIT and GPL licenses, just like jQuery itself.
+    <h1>Лицензия</h1>
+    Этот плагин находится под двойным лицензированием MIT и GPL2, так же как и сам jQuery.
     <hr>
     &copy;2012, <a href="http://webdev-tales.ru">Dmitry Shamin</a>
     </body>

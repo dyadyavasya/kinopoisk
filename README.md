@@ -1,7 +1,7 @@
 <h1>About</h1>
 <p>
-jQuery Kinopolis is a plugin that let you easily add to your web page movie rating informer. This informer shows
-movie rating from kinopois.ru and imdb.com. It does not use any server side scripts. It use javascript and css files only.
+jQuery Kinopoisk is a plugin that let you easily add to your web page movie rating informer. This informer shows
+movie rating from kinopoisk.ru and imdb.com. It does not use any server side scripts. It use javascript and css files only.
 </p>
 <h2>Getting Started</h2>
 Include jQuery and the plugin on a page.
@@ -70,4 +70,4 @@ You can change informer template.
             );
         &lt;/script&gt;</code></pre>
 <h1>License</h1>
-This plugin is dual licensed under the MIT and GPL licenses, just like jQuery itself.
+This plugin is dual licensed under the MIT and GPL2 licenses, just like jQuery itself.
