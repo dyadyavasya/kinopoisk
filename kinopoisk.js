@@ -1,63 +1,53 @@
 /**
- * jQuery Kinopolis Plugin 0.1
+ * jQuery Kinopolis Plugin 0.2
  *
  * Kinopolis is a jQuery plugin that let you easily add to your web page movie rating informer. This informer shows
  * movie rating from kinopois.ru and imdb.com. It does not use any server side scripts. It use javascript and css files only.
  *
  * @name kinopolis
- * @version 0.1
+ * @version 0.2
  * @requires jQuery v1.5.0+
  * @author Dmitry Shamin <dmitry.shamin@gmail.com>
  * @license Dual licensed under the MIT or GPL Version 2 licenses.
  *
- * Copyright 2012, Dmitry Shamin
+ * Copyright 2012-2013, Dmitry Shamin
  */
 ;(function( $ ) {
+
+    var settings = {
+        "movie"  : false,
+        "url"    : "http://www.kinopoisk.ru/rating/",
+        "range"  : 10,
+        "order"  : ["kinopoisk", "imdb"],
+        "kinopoisk_template": '<div>' +
+                '<span class="kp_description">Рейтинг <a href="http://kinopoisk.ru" target="new">Кинопоиска</a>:</span>' +
+                '<span class="kp_rating" title="Проголосовало $vote">$rating</span>' +
+                '<span class="kp_stars">$stars</span></div>',
+        "imdb_template": '<div>' +
+                '<span class="kp_description">Рейтинг <a href="http://imdb.com" target="new">IMDB</a>:</span>' +
+                '<span class="kp_rating" title="Проголосовало $vote">$rating</span>' +
+                '<span class="kp_stars">$stars</span></div>'
+    };
 
     var methods = {
 
         // Инициализация плагина
         init : function(options) {
-
-            var settings = {
-                "movie"  : false,
-                "url"    : "http://www.kinopoisk.ru/rating/",
-                "range"  : 10,
-                "order"  : ["kinopoisk", "imdb"],
-                "kinopoisk_template": '<div>' +
-                        '<span class="kp_description">Рейтинг <a href="http://kinopoisk.ru" target="new">Кинопоиска</a>:</span>' +
-                        '<span class="kp_rating" title="Проголосовало $vote">$rating</span>' +
-                        '<span class="kp_stars">$stars</span></div>',
-                "imdb_template": '<div>' +
-                        '<span class="kp_description">Рейтинг <a href="http://imdb.com" target="new">IMDB</a>:</span>' +
-                        '<span class="kp_rating" title="Проголосовало $vote">$rating</span>' +
-                        '<span class="kp_stars">$stars</span></div>'
-            };
-
             return this.each(function() {
-                // Значения, заданные через options;
-                if (options) {
-                    $.extend(settings, options);
-                }
-                var el = $(this);
-                // Если значения заданы через data
-                var data = el.data();
-                for (var i in data) {
-                    if (el.data(i)) {
-                        if (i == 'movie') {
-                            var movie = el.data(i).toString().split('/');
-                            if (movie.length > 1) {
-                                settings[i] = movie[4];
-                            } else {
-                                settings[i] = movie[0];
-                            }
+                var $this = $(this);
+                var params = $.extend({}, settings, $this.data(), options);
+                // Если вместо идентификатора передали ссылку
+                for (var i in params) {
+                    if (i == 'movie') {
+                        var movie = params[i].toString().split('/');
+                        if (movie.length > 1) {
+                            params[i] = movie[4];
                         } else {
-                            settings[i] = el.data(i);
+                            params[i] = movie[0];
                         }
-
                     }
                 }
-                el.kinopoisk('getRating', settings);
+               $this.kinopoisk('getRating', params);
             });
         },
         // Получение рейтинга с сайта kinopolis.ru
