@@ -38,6 +38,11 @@ Set stars' range (10 as default):
 &lt;div class="kinopoisk" data-movie="89515" data-range=5 &gt;&lt;/div&gt;
 </code>
 </pre>
+You can use link on movie instead of movie identification.
+<pre>
+<code>
+&lt;div class="kinopoisk" data-movie="http://www.kinopoisk.ru/film/566055" &gt;&lt;/div&gt;</code>
+</pre>
 <h1>API</h1>
 You can use API to control plugin.
     <pre><code>

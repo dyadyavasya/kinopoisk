@@ -97,6 +97,14 @@
     </pre>
     Результат:
     <div class="kinopoisk" data-movie="89513" data-range=5></div>
+    <h2>Использование ссылки вместо идентификатора</h2>
+    Можно использовать не идентификатор фильма на кинопоиске, а ссылку на него.
+    <pre>
+    <code>
+    &lt;div class="kinopoisk" data-movie="http://www.kinopoisk.ru/film/566055" &gt;&lt;/div&gt;</code>
+    </pre>
+    Результат:
+    <div class="kinopoisk" data-order='["imdb", "kinopoisk"]' data-movie="http://www.kinopoisk.ru/film/566055" data-range="10"></div>
     <h1>API</h1>
     Вы можете использовать API для контроля работы плагина.
     <pre><code>

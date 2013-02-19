@@ -44,7 +44,17 @@
                 var data = el.data();
                 for (var i in data) {
                     if (el.data(i)) {
-                        settings[i] = el.data(i);
+                        if (i == 'movie') {
+                            var movie = el.data(i).toString().split('/');
+                            if (movie.length > 1) {
+                                settings[i] = movie[4];
+                            } else {
+                                settings[i] = movie[0];
+                            }
+                        } else {
+                            settings[i] = el.data(i);
+                        }
+
                     }
                 }
                 el.kinopoisk('getRating', settings);
