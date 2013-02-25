@@ -98,8 +98,10 @@
                 "imdb": el.kinopoisk("_getTemplate", params.imdb_template, $imdb_rating)
             };
             var text = "";
-            for (var i in params.order) {
-                text += ratings[params.order[i]];
+            for (var i in params.order) if (params.order.hasOwnProperty(i)) {
+                if (typeof ratings[params.order[i]] != 'undefined') {
+                    text += ratings[params.order[i]];
+                }
             }
             return el.hide().html('<span class="kp_container">' + text + '</span>').fadeIn();
         },
