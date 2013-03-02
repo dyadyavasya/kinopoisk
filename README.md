@@ -43,6 +43,12 @@ You can use link on movie instead of movie identification.
 <code>
 &lt;div class="kinopoisk" data-movie="http://www.kinopoisk.ru/film/566055" &gt;&lt;/div&gt;</code>
 </pre>
+Cache time is set on 1 day by default. You can change that attribute (data-cache_time) setting it in milliseconds.
+Set 0 to switch off cache.
+<pre>
+<code>
+&lt;div class="kinopoisk" data-movie="506005" data-cache_time="0"&gt;&lt;/div&gt;</code>
+</pre>
 <h1>API</h1>
 You can use API to control plugin.
     <pre><code>

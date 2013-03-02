@@ -105,6 +105,15 @@
     </pre>
     Результат:
     <div class="kinopoisk" data-movie="http://www.kinopoisk.ru/film/566055"></div>
+    <h2>Использование кеша</h2>
+    По умолчанию все данные рейтингов кешируюся на сутки. Но вы можете управлять этим параметром. Аттрибут cache_time
+    хранит значение времени хранения кеша в миллисекундах. Если установить его в 0, то рейтинг кешироваться не будет.
+    <pre>
+    <code>
+    &lt;div class="kinopoisk" data-movie="506005" data-cache_time="0"&gt;&lt;/div&gt;</code>
+    </pre>
+    Результат:
+    <div class="kinopoisk" data-movie="506005" data-cache_time="0"></div>
     <h1>API</h1>
     Вы можете использовать API для контроля работы плагина.
     <pre><code>

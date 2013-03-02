@@ -1,11 +1,11 @@
 /**
-  * jQuery Kinopolis Plugin 0.3
+  * jQuery Kinopolis Plugin 0.4
   *
   * Kinopolis is a jQuery plugin that let you easily add to your web page movie rating informer. This informer shows
   * movie rating from kinopois.ru and imdb.com. It does not use any server side scripts. It use javascript and css files only.
   *
   * @name kinopolis
-  * @version 0.3
+  * @version 0.4
   * @requires jQuery v1.5.0+
   * @author Dmitry Shamin <dmitry.shamin@gmail.com>
   * @license Dual licensed under the MIT or GPL Version 2 licenses.
@@ -14,6 +14,11 @@
   */
 ;(function( $ ) {
 
+    /**
+     * Установки по умолчанию
+     *
+     * @type {Object}
+     */
     var settings = {
         "movie"  : false,
         "url"    : "http://www.kinopoisk.ru/rating/",
@@ -26,12 +31,24 @@
         "imdb_template": '<div>' +
                 '<span class="kp_description">Рейтинг <a href="http://imdb.com" target="new">IMDB</a>:</span>' +
                 '<span class="kp_rating" title="Проголосовало $vote">$rating</span>' +
-                '<span class="kp_stars">$stars</span></div>'
+                '<span class="kp_stars">$stars</span></div>',
+        "cache_time" : 86400000
     };
 
+    /**
+     * Методы плагина
+     *
+     * @type {Object}
+     */
     var methods = {
 
-        // Инициализация плагина
+        /**
+         * Инициализация плагина
+         *
+         * @param options {String[]} Массив с параметрами плагина
+         *
+         * @return {*}
+         */
         init : function(options) {
             return this.each(function() {
                 var $this = $(this);
@@ -52,38 +69,110 @@
                 $this.kinopoisk('getRating');
             });
         },
-        // Получение рейтинга с сайта kinopolis.ru
+        /**
+         * Получение рейтинга с сайта kinopolis.ru
+         *
+         * @return {*}
+         */
         getRating: function() {
             var el = $(this);
             var params = el.data('params');
             if (!params.movie) {
                 throw 'Не указан идентификатор фильма на кинопоиске (data-movie).';
             }
-            $.ajax(
-                {
-                    type: 'GET',
-                    url: 'http://query.yahooapis.com/v1/public/yql?q='
-                            + encodeURIComponent('select * from xml where url="' + params.url + '/' + params.movie
-                            + '.xml"') + '&format=xml&callback=?',
-                    dataType: 'json',
-                    success: function(data) {
-                        return el.kinopoisk("_showRating", data);
-                    },
-                    error: function(data) {
-                        console.log(data);
-                        $.error(data.responseText);
+            // Проверяем кеш
+            var movie_xml = methods._getCache(el, params.movie);
+            if (movie_xml) {
+                return methods._showRating(el, movie_xml);
+            } else {
+                $.ajax(
+                    {
+                        type: 'GET',
+                        url: 'http://query.yahooapis.com/v1/public/yql?q='
+                                + encodeURIComponent('select * from xml where url="' + params.url + '/' + params.movie
+                                + '.xml"') + '&format=xml&callback=?',
+                        dataType: 'json',
+                        success: function(data) {
+                            movie_xml = methods._setCache(el, params.movie, data.results[0]); // Кешируем данные
+                            return methods._showRating(el, movie_xml);
+                        },
+                        error: function(data) {
+                            console.log(data);
+                            $.error(data.responseText);
+                        }
                     }
-                }
-            );
+                );
+            }
         },
-        // Показ рейтинга
-        _showRating: function(data) {
-            var el = $(this);
+        /**
+         * Получение значения из кеша.
+         *
+         * @param el    {Object}  jQuery объект текущего элемента
+         * @param movie {Integer} Идентификатор фильма
+         *
+         * @return {*}
+         * @private
+         */
+        _getCache: function(el, movie) {
             var params = el.data('params');
-            if (!data.results[0]) {
+            var timestamp = new Date().getTime();
+            var cache = localStorage.getItem("movie_" + movie);
+            if (!cache) {
+                return false;
+            } else {
+                var xml_doc      = $.parseXML(cache);
+                var $xml         = $(xml_doc);
+                if ((timestamp - $xml.find("cache_time").text()) > params.cache_time) {
+                    // Если кеш истёк, чистим его
+                    localStorage.removeItem("movie_" + movie);
+                    return false;
+                }
+            }
+            return cache;
+        },
+        /**
+         * Установка кеша
+         *
+         * @param el    {Object}  Объект jQuery
+         * @param movie {Integer} Идентификатор фильма
+         * @param data  {String}  XML с ответом сервера kinopoisk
+         *
+         * @return {String}
+         * @private
+         */
+        _setCache: function(el, movie, data) {
+            var params = el.data('params');
+            var timestamp = new Date().getTime();
+            var cache = localStorage.getItem("movie_" + movie);
+            var movie_xml = "<result>" + data +  "<cache_time>" + timestamp + "</cache_time></result>";
+            if (!cache) {
+                localStorage.setItem("movie_" + movie, movie_xml);
+            } else {
+                var xml_doc      = $.parseXML(cache);
+                var $xml         = $(xml_doc);
+                if ((timestamp - $xml.find("cache_time").text()) > params.cache_time) {
+                    // Если разница во времени более суток, то обновляем кеш
+                    localStorage.setItem("movie_" + movie, movie_xml);
+                } else {
+                    movie_xml = cache;
+                }
+            }
+            return movie_xml;
+        },
+        /**
+         * Показ рейтинга
+         *
+         * @param el {Object}   jQuery объект
+         * @param data {String} XML с ответом сервера kinopoisk
+         *
+         * @private
+         */
+        _showRating: function(el, data) {
+            var params = el.data('params');
+            if (!data) {
                 throw 'Проверьте правильность url "' + params.url + '"';
             }
-            var xml_doc      = $.parseXML(data.results[0]);
+            var xml_doc      = $.parseXML(data);
             var $xml         = $(xml_doc);
             var $kp_rating   = $xml.find("kp_rating");
             var $imdb_rating = $xml.find("imdb_rating");
@@ -91,11 +180,11 @@
             if ($kp_rating.text() == 0 && $kp_rating.attr("num_vote") == 0) {
                 return el.html('<span class="kp_container">Нет данных</span>');
             }
-            $kp_rating.stars   = el.kinopoisk("_getStar", $kp_rating.text(), params);
-            $imdb_rating.stars = el.kinopoisk("_getStar", $imdb_rating.text(), params);
+            $kp_rating.stars   = methods._getStar($kp_rating.text(), params.range);
+            $imdb_rating.stars = methods._getStar($imdb_rating.text(), params.range);
             var ratings = {
-                "kinopoisk": el.kinopoisk("_getTemplate", params.kinopoisk_template, $kp_rating),
-                "imdb": el.kinopoisk("_getTemplate", params.imdb_template, $imdb_rating)
+                "kinopoisk": methods._getTemplate(params.kinopoisk_template, $kp_rating),
+                "imdb": methods._getTemplate(params.imdb_template, $imdb_rating)
             };
             var text = "";
             for (var i in params.order) if (params.order.hasOwnProperty(i)) {
@@ -105,17 +194,34 @@
             }
             return el.hide().html('<span class="kp_container">' + text + '</span>').fadeIn();
         },
+        /**
+         * Шаблон отображения
+         *
+         * @param template  {String} Шаблон
+         * @param $rating   {Object} Объект рейтинга
+         *
+         * @return {String}
+         * @private
+         */
         _getTemplate: function(template, $rating) {
             return template
                 .replace("$rating", $rating.text())
                 .replace("$vote", $rating.attr("num_vote"))
                 .replace("$stars", $rating.stars);
         },
-        // получение звёзд
-        _getStar: function(rating, params) {
+        /**
+         * Отображение звёзд
+         *
+         * @param rating {FLoat}   Рейтинг
+         * @param range  {Integer} Диапазон звёздности
+         *
+         * @return {String}
+         * @private
+         */
+        _getStar: function(rating, range) {
             var star = "";
-            var round_rating = Math.round(rating * params.range / 10);
-            for (var i = 1; i <= params.range; i++) {
+            var round_rating = Math.round(rating * range / 10);
+            for (var i = 1; i <= range; i++) {
                 if (i <= round_rating) {
                     star += "<span>&#9733;</span>";
                 } else {
@@ -129,6 +235,9 @@
     $.fn.kinopoisk = function(method) {
         try {
             if (methods[method]) {
+                if (method.charAt(0) == "_") {
+                    throw "Нельзя вызывать приватный метод";
+                }
                 return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
             } else if (typeof method === 'object' || ! method) {
                 return methods.init.apply(this, arguments);
