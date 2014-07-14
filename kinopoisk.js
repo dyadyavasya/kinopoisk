@@ -21,7 +21,7 @@
      */
     var settings = {
         "movie"  : false,
-        "url"    : "http://www.kinopoisk.ru/rating/",
+        "url"    : "http://rating.kinopoisk.ru",
         "range"  : 10,
         "order"  : ["kinopoisk", "imdb"],
         "kinopoisk_template": '<div>' +
