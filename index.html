@@ -96,13 +96,21 @@
     </pre>
     Result:
     <div class="kinopoisk" data-movie="89513" data-range=5></div>
+    <h2>Round the rating</h2>
+    "fix" parameter set an amount  of numbers after the dot.
+    <pre>
+    <code>
+    &lt;div class="kinopoisk" data-movie="89515" data-range=5 data-fix=3&gt;&lt;/div&gt;</code>
+    </pre>
+    Result:
+    <div class="kinopoisk" data-movie="89516" data-range=5 data-fix=3></div>
     <h2>Link on movie</h2>
     You can use link on movie instead of movie identification.
     <pre>
     <code>
     &lt;div class="kinopoisk" data-movie="http://www.kinopoisk.ru/film/566055" &gt;&lt;/div&gt;</code>
     </pre>
-    Результат:
+    Result:
     <div class="kinopoisk" data-movie="http://www.kinopoisk.ru/film/566055"></div>
     <h2>Cache</h2>
     Cache time is set on 1 day by default. You can change that attribute (data-cache_time) setting it in milliseconds.

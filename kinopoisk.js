@@ -23,6 +23,7 @@
         "movie"  : false,
         "url"    : "http://rating.kinopoisk.ru",
         "range"  : 10,
+        "fix"    : 1,
         "order"  : ["kinopoisk", "imdb"],
         "kinopoisk_template": '<div>' +
                 '<span class="kp_description">Рейтинг <a href="http://kinopoisk.ru" target="new">Кинопоиска</a>:</span>' +
@@ -70,7 +71,7 @@
             });
         },
         /**
-         * Получение рейтинга с сайта kinopolis.ru
+         * Получение рейтинга с сайта kinopoisk.ru
          *
          * @return {*}
          */
@@ -180,6 +181,10 @@
             if ($kp_rating.text() == 0 && $kp_rating.attr("num_vote") == 0) {
                 return el.html('<span class="kp_container">Нет данных</span>');
             }
+            // Округление рейтинга
+            $kp_rating.text(methods.__roundRating($kp_rating, params.fix));
+            $imdb_rating.text(methods.__roundRating($imdb_rating, params.fix));
+            // Получение звёзд
             $kp_rating.stars   = methods._getStar($kp_rating.text(), params.range);
             $imdb_rating.stars = methods._getStar($imdb_rating.text(), params.range);
             var ratings = {
@@ -193,6 +198,16 @@
                 }
             }
             return el.hide().html('<span class="kp_container">' + text + '</span>').fadeIn();
+        },
+        /**
+         * Округление рейтинга
+         *
+         * @param rating {Object} Объект рейтинга
+         * @param fix    {int}    Количество знаков после запятой
+         * @private
+         */
+        __roundRating: function(rating, fix) {
+            return Math.round(parseFloat(rating.text()) * Math.pow(10, fix)) / Math.pow(10, fix);
         },
         /**
          * Шаблон отображения
