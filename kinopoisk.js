@@ -5,7 +5,7 @@
   * movie rating from kinopoisk.ru and imdb.com. It does not use any server side scripts. It use javascript and css files only.
   *
   * @name kinopoisk
-  * @version 0.4
+  * @version 0.6
   * @requires jQuery v1.5.0+
   * @author Dmitry Shamin <dmitry.shamin@gmail.com>
   * @license Dual licensed under the MIT or GPL Version 2 licenses.
@@ -33,7 +33,9 @@
                 '<span class="kp_description">Рейтинг <a href="http://imdb.com" target="new">IMDB</a>:</span>' +
                 '<span class="kp_rating" title="Проголосовало $vote">$rating</span>' +
                 '<span class="kp_stars">$stars</span></div>',
-        "cache_time" : 86400000
+        "cache_time" : 86400000,
+        "no_data": "Нет данных",
+        "show_zero_rating": true
     };
 
     /**
@@ -179,7 +181,12 @@
             var $imdb_rating = $xml.find("imdb_rating");
             // Если был указан левый movie_id
             if ($kp_rating.text() == 0 && $kp_rating.attr("num_vote") == 0) {
-                return el.html('<span class="kp_container">Нет данных</span>');
+                if (!params.no_data) {
+                    return el;
+                } else {
+                    return el.html('<span class="kp_container">' + params.no_data + '</span>');
+                }
+
             }
             // Округление рейтинга
             $kp_rating.text(methods.__roundRating($kp_rating, params.fix));
@@ -187,9 +194,19 @@
             // Получение звёзд
             $kp_rating.stars   = methods._getStar($kp_rating.text(), params.range);
             $imdb_rating.stars = methods._getStar($imdb_rating.text(), params.range);
+            var kp_tpl = methods._getTemplate(params.kinopoisk_template, $kp_rating);
+            var imdb_tpl = methods._getTemplate(params.imdb_template, $imdb_rating);
+            if (params.show_zero_rating == false) {
+                if ($kp_rating.text() == 0) {
+                    kp_tpl = "";
+                }
+                if ($imdb_rating.text() == 0) {
+                    imdb_tpl = "";
+                }
+            }
             var ratings = {
-                "kinopoisk": methods._getTemplate(params.kinopoisk_template, $kp_rating),
-                "imdb": methods._getTemplate(params.imdb_template, $imdb_rating)
+                "kinopoisk": kp_tpl,
+                "imdb": imdb_tpl
             };
             var text = "";
             for (var i in params.order) if (params.order.hasOwnProperty(i)) {

@@ -96,7 +96,7 @@
     &lt;div class="kinopoisk" data-movie="89515" data-range=5 &gt;&lt;/div&gt;</code>
     </pre>
     Результат:
-    <div class="kinopoisk" data-movie="89513" data-range=5></div>
+    <div class="kinopoisk" data-movie="89515" data-range=5 ></div>
     <h2>Округление рейтинга</h2>
     Можно установить нужное количество знаков после запятой (по умолчанию 1). Рейтинг кинополиса отдаёт значение с тремя
     знаками после запятой, а IMDB - с 1 знаком.
@@ -123,6 +123,27 @@
     </pre>
     Результат:
     <div class="kinopoisk" data-movie="506005" data-cache_time="0"></div>
+    <h2>Информация, что данных не найдено</h2>
+    По умолчанию, если данных о фильме не найдено, будет выдано преупреждение. Вы можете его отключить или изменить его
+    текст с помощью параметра data-no_data.
+    <pre>
+    <code>
+    &lt;div class="kinopoisk" data-movie="5060055555" data-no_data=""&gt;&lt;/div&gt;</code>
+    </pre>
+    Результат с надписью по умолчанию:
+    <div class="kinopoisk" data-movie="506005555"></div>
+    Результат с вашей надписью:
+    <div class="kinopoisk" data-movie="506005555" data-no_data="No data"></div>
+    Результат, когда скрипт ничего не выводит на страницу:
+    <div class="kinopoisk" data-movie="506005555" data-no_data=""></div>
+    <h2>Отключение вывода рейтинга, если он равен нулю</h2>
+    Вы можете отключить вывод рейтинга, если он нулевой с помощью параметра data-show_zero_rating. По умолчанию этот параметр включен.
+    <pre>
+    <code>
+    &lt;div class="kinopoisk" data-movie="89515" data-show_zero_rating="false" &gt;&lt;/div&gt;</code>
+    </pre>
+    Результат:
+    <div class="kinopoisk" data-movie="89513" data-show_zero_rating="false" ></div>
     <h1>API</h1>
     Вы можете использовать API для контроля работы плагина.
     <pre><code>

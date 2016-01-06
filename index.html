@@ -119,8 +119,28 @@
     <code>
     &lt;div class="kinopoisk" data-movie="506005" data-cache_time="0"&gt;&lt;/div&gt;</code>
     </pre>
-    Результат:
+    Result:
     <div class="kinopoisk" data-movie="506005" data-cache_time="0"></div>
+    <h2>Warning about "No data"</h2>
+    Script will show warning if no movie rating found. You can switch off that warrning or replace default text with data-no_data param.
+    <pre>
+    <code>
+    &lt;div class="kinopoisk" data-movie="5060055555" data-no_data=""&gt;&lt;/div&gt;</code>
+    </pre>
+    Result with default warrning:
+    <div class="kinopoisk" data-movie="506005555"></div>
+    Result with custom text:
+    <div class="kinopoisk" data-movie="506005555" data-no_data="No data"></div>
+    No warrning:
+    <div class="kinopoisk" data-movie="506005555" data-no_data=""></div>
+    <h2>Hide rating with zero result</h2>
+    You can hide raiting if kinopoisk return zero value.
+    <pre>
+    <code>
+    &lt;div class="kinopoisk" data-movie="89515" data-show_zero_rating="false" &gt;&lt;/div&gt;</code>
+    </pre>
+    Result:
+    <div class="kinopoisk" data-movie="89513" data-show_zero_rating="false" ></div>
     <h1>API</h1>
     You can use API to control plugin.
     <pre><code>
