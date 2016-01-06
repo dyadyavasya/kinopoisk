@@ -49,7 +49,7 @@ Set 0 to switch off cache.
 <code>
 &lt;div class="kinopoisk" data-movie="506005" data-cache_time="0"&gt;&lt;/div&gt;</code>
 </pre>
-<h1>Examples</h1
+<h1>Examples</h1>
 All examples you will see in index.html
 <h1>API</h1>
 You can use API to control plugin.
